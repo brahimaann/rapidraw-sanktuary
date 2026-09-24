@@ -5,6 +5,8 @@
 // rights and forwards them to this app running on the home server (src-tauri/src/sanktuary_bridge.rs).
 // Paths are Sanktuary paths: "sk://<space>/<folder>/<file>".
 
+import './win98.css'; // look like the Windows 98 desktop it opens in
+
 const params = new URLSearchParams(location.search);
 const API = '/api/raw';
 

@@ -767,6 +767,12 @@ pub fn load_settings(app_handle: AppHandle) -> Result<AppSettings, String> {
         let _ = fs::write(&path, json_string);
     }
 
+    // Sanktuary engine: the window is hidden, so the direct-to-window renderer would draw where nobody can see
+    // it (the browser only gets "WGPU_RENDER" back). Always hand back encoded images instead.
+    if crate::sanktuary_bridge::active() {
+        settings.use_wgpu_renderer = Some(false);
+    }
+
     Ok(settings)
 }
 

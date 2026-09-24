@@ -1,0 +1,149 @@
+/* Sanktuary OS build only (imported by src/sanktuary/tauri.ts): RapidRAW dressed as a Windows 98 program, to
+   match the desktop it opens in. The theme's colour variables are set inline on <html> by the app, so these
+   win with !important whatever theme is picked in Settings. */
+:root {
+  --app-bg-primary: #c0c0c0 !important;
+  --app-bg-secondary: #c0c0c0 !important;
+  --app-surface: #d4d0c8 !important;
+  --app-card-active: #ffffff !important;
+  --app-button-text: #ffffff !important;
+  --app-text-primary: #000000 !important;
+  --app-text-secondary: #404040 !important;
+  --app-accent: #000080 !important;
+  --app-border-color: #808080 !important;
+  --app-hover-color: #000080 !important;
+  --font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Tahoma, Arial, sans-serif !important;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --shadow-shiny: none;
+}
+
+html,
+body {
+  font-size: 12px;
+}
+
+/* Square corners and no soft glows anywhere */
+[class*='rounded'],
+button,
+input,
+select,
+textarea {
+  border-radius: 0 !important;
+}
+[class*='shadow'] {
+  box-shadow: none !important;
+}
+[class*='backdrop-blur'] {
+  backdrop-filter: none !important;
+}
+
+/* Raised 3D buttons */
+button[class*='bg-'],
+[role='button'][class*='bg-'] {
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #ffffff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf !important;
+}
+button[class*='bg-']:active:not(:disabled) {
+  box-shadow:
+    inset 1px 1px #0a0a0a,
+    inset -1px -1px #ffffff,
+    inset 2px 2px #808080 !important;
+}
+button:disabled {
+  color: #808080 !important;
+  text-shadow: 1px 1px #ffffff;
+}
+
+/* Sunken white fields */
+input[type='text'],
+input[type='number'],
+input[type='search'],
+select,
+textarea {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 0 !important;
+  box-shadow:
+    inset -1px -1px #ffffff,
+    inset 1px 1px #808080,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a !important;
+}
+
+/* Sliders: a sunken groove with a rectangular thumb */
+input[type='range'] {
+  accent-color: #000080;
+}
+.slider-input::-webkit-slider-runnable-track {
+  height: 4px;
+  background: #ffffff;
+  box-shadow:
+    inset 1px 1px #808080,
+    inset -1px -1px #dfdfdf;
+}
+.slider-input::-webkit-slider-thumb {
+  width: 11px !important;
+  height: 21px !important;
+  margin-top: -9px;
+  border-radius: 0 !important;
+  background: #c0c0c0 !important;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #ffffff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+  transform: none !important;
+}
+.slider-input::-moz-range-thumb {
+  width: 11px !important;
+  height: 21px !important;
+  border-radius: 0 !important;
+  background: #c0c0c0 !important;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #ffffff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+  transform: none !important;
+}
+
+/* Selection and focus in navy, like Windows */
+::selection {
+  background: #000080;
+  color: #ffffff;
+}
+:focus-visible {
+  outline: 1px dotted #000000 !important;
+  outline-offset: -3px;
+}
+
+/* Windows 98 scrollbars */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+::-webkit-scrollbar-track {
+  background-color: #dfdfdf;
+  background-image:
+    linear-gradient(45deg, #c0c0c0 25%, transparent 25%, transparent 75%, #c0c0c0 75%),
+    linear-gradient(45deg, #c0c0c0 25%, transparent 25%, transparent 75%, #c0c0c0 75%);
+  background-size: 2px 2px;
+  background-position:
+    0 0,
+    1px 1px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #ffffff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+}
+::-webkit-scrollbar-corner {
+  background: #c0c0c0;
+}

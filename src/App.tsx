@@ -864,7 +864,8 @@ function App() {
               isFullScreen ? 'max-h-0 opacity-0 pointer-events-none' : 'max-h-15 opacity-100',
             )}
           >
-            {appSettings?.decorations || (!isWindowFullScreen && <TitleBar />)}
+            {/* Sanktuary build (served under /apps/rapidraw/): the Sanktuary window already has a title bar */}
+            {import.meta.env.BASE_URL === '/' && (appSettings?.decorations || (!isWindowFullScreen && <TitleBar />))}
           </div>
         )}
         <div
