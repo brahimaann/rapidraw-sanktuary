@@ -39,6 +39,7 @@ mod panorama_stitching;
 mod panorama_utils;
 mod preset_converter;
 mod raw_processing;
+mod sanktuary_bridge;
 mod tagging;
 mod tagging_utils;
 mod window_customizer;
@@ -1680,7 +1681,9 @@ fn frontend_ready(
             }
         }
 
-        if let Err(e) = window.show() {
+        if !crate::sanktuary_bridge::active()
+            && let Err(e) = window.show()
+        {
             log::error!("Failed to show window: {}", e);
         }
         if let Err(e) = window.set_focus() {
@@ -1815,6 +1818,14 @@ pub fn run() {
             }
 
             let app_handle = app.handle().clone();
+
+            // Sanktuary OS: run as the home server's photo engine for the browser editor (see sanktuary_bridge.rs)
+            if std::env::var("SANKTUARY_BRIDGE_PORT").is_ok() {
+                crate::sanktuary_bridge::start(app_handle.clone());
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.hide();
+                }
+            }
 
             if let Ok(cache_dir) = app_handle.path().app_cache_dir() {
                 crate::exif_processing::initialize_cache_dir(cache_dir);
@@ -2018,8 +2029,10 @@ pub fn run() {
                         log::warn!(
                             "Frontend failed to report ready within timeout. Forcing window visibility."
                         );
-                        let _ = window_failsafe.show();
-                        let _ = window_failsafe.set_focus();
+                        if !crate::sanktuary_bridge::active() {
+                            let _ = window_failsafe.show();
+                            let _ = window_failsafe.set_focus();
+                        }
                     }
                 });
 
@@ -2277,7 +2290,9 @@ pub fn run() {
 				            .window_setup_complete
 				            .load(std::sync::atomic::Ordering::Relaxed)
 				        {
-				            if let Some(window) = app_handle.get_webview_window("main") {
+				            if let Some(window) = app_handle.get_webview_window("main")
+				                && !crate::sanktuary_bridge::active()
+				            {
 				                let _ = window.unminimize();
 				                let _ = window.show();
 				                let _ = window.set_focus();
