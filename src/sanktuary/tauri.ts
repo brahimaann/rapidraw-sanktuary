@@ -89,6 +89,9 @@ export const getCurrentWebviewWindow = () => noop;
 // Files are chosen in Sanktuary, not with the desktop's own dialogs
 export const open = async (arg?: unknown) => {
   if (typeof arg === 'string') window.open(arg, '_blank', 'noopener'); // plugin-shell open(url)
+  // plugin-dialog open({ directory: true }): Sanktuary's own folder picker (injected by the server), returns sk://...
+  const pick = (window as unknown as { __rapidraw_open_dialog?: () => Promise<string | null> }).__rapidraw_open_dialog;
+  if (arg && typeof arg === 'object' && (arg as { directory?: boolean }).directory && pick) return pick();
   return null;
 };
 export const save = async () => null;
